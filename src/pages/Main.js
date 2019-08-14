@@ -1,27 +1,21 @@
 /* eslint-disable prettier/prettier */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SafeAreaView, TouchableOpacity, Text } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 
-export default function Main({navigation}) {
+import Location from '../services/location'
 
-    async function signOut() {
+export default function Main({ navigation }) {
 
-        await AsyncStorage.multiSet([
-            ['@Ditudo:token', ''],
-            ['@Ditudo:user', '']
-        ])
+    useEffect(() => {
+    })
 
-        navigation.navigate('Initial')
-
-    }
 
     return (
         <SafeAreaView >
-            <TouchableOpacity onPress={signOut}>
-                <Text>logout</Text>
-            </TouchableOpacity>
-            
+            <Location></Location>
+
         </SafeAreaView>
     )
 }
+
