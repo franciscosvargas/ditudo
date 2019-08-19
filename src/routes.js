@@ -6,9 +6,13 @@ import Initial from './pages/InitialVerification'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Main'
-import Pesquisar from './pages/Search'
+import Pesquisar from './pages/Main'
 import Pedidos from './pages/Invoices'
-import Perfil from './pages/Profile'
+import Profile from './pages/Profile'
+
+const Perfil = createSwitchNavigator({
+    Profile,
+})
 
 const Auth = createSwitchNavigator({
     Initial,
@@ -17,7 +21,6 @@ const Auth = createSwitchNavigator({
 })
 
 const App = createBottomTabNavigator({
-    Home,
     Pesquisar,
     Pedidos,
     Perfil

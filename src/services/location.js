@@ -42,14 +42,12 @@ export default class Location extends Component {
 
             this.getAddress(info.coords.latitude, info.coords.longitude)
         })
-
-
     }
 
     async getAddress(latitude, longitude) {
         Geocoder.init(GOOGLE_API_KEY)
         const jsonLocation = await Geocoder.from({latitude, longitude})
-        const message = jsonLocation.results[2].address_components[1].short_name
+        const message = jsonLocation.results[0].address_components[1].long_name
         this.setState({
             messageLocation: message
         }) 

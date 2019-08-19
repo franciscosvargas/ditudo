@@ -10,7 +10,7 @@ export default function Initial({ navigation }) {
     useEffect(() => {
         AsyncStorage.getItem('@Ditudo:token').then(token => {
           if (token) {
-            navigation.navigate('Home', { token })
+            navigation.navigate('Pesquisar', { token })
           } else {
             navigation.navigate('Login')
           }
