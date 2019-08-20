@@ -13,13 +13,18 @@ export default function Profile({ navigation }) {
 
         navigation.navigate('Initial')
     }
+
+    function redirectToAdverts(){
+        navigation.navigate('Adverts')
+    }
+
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
             <View style={styles.boxOption}>
                 <TouchableOpacity style={styles.option}>
                     <Text style={styles.textOption}>Editar meu perfil</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.option}>
+                <TouchableOpacity onPress={redirectToAdverts} style={styles.option}>
                     <Text style={styles.textOption}>Meus anúncios</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.option}>
@@ -29,10 +34,17 @@ export default function Profile({ navigation }) {
                     <Text style={styles.textOption2}>Sair da conta</Text>
                 </TouchableOpacity>
             </View>
-
-
         </ScrollView>
     )
+}
+
+Profile.navigationOptions = {
+    title: 'Seu perfil',
+    headerTitleStyle: {
+        textAlign: 'left',
+        fontFamily: 'Raleway',
+        fontSize: 20,
+      },
 }
 
 const styles = StyleSheet.create({

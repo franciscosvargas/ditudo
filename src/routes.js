@@ -1,77 +1,74 @@
 import React from 'react'
 import { Image } from 'react-native'
-import { createAppContainer, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator, createBottomTabNavigator, createStackNavigator } from 'react-navigation'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
+// Primary Routes
 import Initial from './pages/InitialVerification'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Home from './pages/Main'
 import Pesquisar from './pages/Main'
-import Pedidos from './pages/Invoices'
 import Profile from './pages/Profile'
+import Chat from './pages/chat/conversations'
 
-const Perfil = createSwitchNavigator({
-    Profile,
+// Profile Navigation 
+import Adverts from './pages/profile/adverts'
+import addAdvert from './pages/profile/addAdvert'
+
+import Ad from './pages/search/Ad'
+const Perfil = createStackNavigator({
+	Profile,
+	Adverts,
+	Ad,
+	addAdvert,
+	
 })
 
 const Auth = createSwitchNavigator({
-    Initial,
-    Login,
-    Register
+	Initial,
+	Login,
+	Register
 })
 
 const App = createBottomTabNavigator({
-    Pesquisar,
-    Pedidos,
-    Perfil
+	Pesquisar,
+	Chat,
+	Perfil
 }, {
-        defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ focused, horizontal, tintColor }) => {
-                const { routeName } = navigation.state;
-                if (routeName === 'Home') {
-                    return (
-                        <Image
-                            source={require('./assets/home.png')}
-                            style={{ width: 25, height: 25, }} />
-                    );
-                } else if(routeName === 'Pesquisar'){
-                    return (
-                        <Image
-                            source={require('./assets/magnifier.png')}
-                            style={{ width: 25, height: 25 }} />
-                    );
-                } else if (routeName === 'Pedidos') {
-                    return (
-                        <Image
-                            source={require('./assets/invoice.png')}
-                            style={{ width: 25, height: 25 }} />
-                    );
-                } else if (routeName === 'Perfil') {
-                    return (
-                        <Image
-                            source={require('./assets/user.png')}
-                            style={{ width: 25, height: 25 }} />
-                    );
-                }
-            },
-        }),
-        tabBarOptions: {
-            
-            activeTintColor: '#0E65E5',
-            inactiveTintColor: '#000',
-            style: {
-                height: 60,
-                padding:5
-            },
-            labelStyle: {
-                fontSize: 13,
-                fontFamily: 'Cabin'
-            }
-        },
-    })
+		defaultNavigationOptions: ({ navigation }) => ({
+			tabBarIcon: ({ focused, horizontal, tintColor }) => {
+				const { routeName } = navigation.state;
+				if (routeName === 'Pesquisar') {
+					return (
+						<Icon name="search" size={24} color={tintColor}/>
 
+					);
+				} else if (routeName === 'Chat') {
+					return (
+						<Icon name="comment" size={25} color={tintColor}/>
+					);
+				} else if (routeName === 'Perfil') {
+					return (
+						<Icon name="user" size={24} color={tintColor}/>
+					);
+				}
+			},
+		}),
+		tabBarOptions: {
+			activeTintColor: '#0E65E5',
+			inactiveTintColor: '#323232',
+			style: {
+				height: 60,
+				padding: 5
+			},
+			labelStyle: {
+				fontSize: 13,
+				fontFamily: 'Cabin'
+			}
+		},
+	})
 
 export default createAppContainer(createSwitchNavigator({
-    Auth,
-    App
+	Auth,
+	App
 }))
