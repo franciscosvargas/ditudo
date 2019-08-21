@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 
 Main.navigationOptions = ({ navigation }) => ({
 
-    title: navigation.state.params.data[0].name,
+    title: 'Encontramos perto de você',
     headerTitleStyle: {
         textAlign: 'left',
         fontFamily: 'Raleway',

@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Initial from './pages/InitialVerification'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Pesquisar from './pages/Main'
+import Main from './pages/Main'
 import Profile from './pages/Profile'
 import Chat from './pages/chat/conversations'
 import Map from './pages/search/Map'
@@ -17,13 +17,19 @@ import Adverts from './pages/profile/adverts'
 import addAdvert from './pages/profile/addAdvert'
 
 import Ad from './pages/search/Ad'
+
+const Pesquisar = createStackNavigator({
+	Main,
+	Ad,
+	Map
+})
+
 const Perfil = createStackNavigator({
 	Profile,
 	Adverts,
 	Map,
 	Ad,
-	addAdvert,
-	
+	addAdvert,	
 })
 
 const Auth = createSwitchNavigator({

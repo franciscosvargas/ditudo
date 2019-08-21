@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
 import { ScrollView, View, TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-
 import AsyncStorage from '@react-native-community/async-storage'
 
 import api from '../../services/api'
