@@ -5,14 +5,17 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
-// import { Container } from './styles';
+import api from '../../services/api'
 
 export default class Ad extends Component {
 
     state = {
-        owner: ''
+        owner: null
     }
 
+    redirectToMap(){
+        this.props.navigation.navigate('Ad', { data: item })
+    }
     componentDidMount() {
         AsyncStorage.getItem('@Ditudo:user').then(user => {
             user = JSON.parse(user)
@@ -32,7 +35,7 @@ export default class Ad extends Component {
     }
     render() {
         return (
-            <ScrollView contentContainerStyle={{paddingBottom: 10}} style={styles.container}>
+            <ScrollView contentContainerStyle={{ paddingBottom: 10 }} style={styles.container}>
                 <Image
                     style={styles.image}
                     source={{ uri: `data:image/gif;base64,${this.props.navigation.state.params.data.image}` }}
@@ -52,20 +55,25 @@ export default class Ad extends Component {
                 </View>
 
                 <TouchableOpacity
+                    onPress={() => {
+                        const data = [this.props.navigation.state.params.data]
+                        this.props.navigation.navigate('Map', { data: data})
+                    }}
                     style={styles.button}
                 >
                     <Icon name="room" size={25} color='#FFF' />
                     <Text style={styles.textButton}>Ver no mapa</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.button}
-                >
-                    <Icon name="chat" size={25} color='#FFF' />
-                    <Text style={styles.textButton}>Conversar com o vendedor</Text>
-                </TouchableOpacity>
 
-
+                {!this.props.navigation.state.params.owner && (
+                    <TouchableOpacity
+                        style={styles.button}
+                    >
+                        <Icon name="chat" size={25} color='#FFF' />
+                        <Text style={styles.textButton}>Conversar com o vendedor</Text>
+                    </TouchableOpacity>
+                )}
             </ScrollView>
         )
     }
@@ -139,7 +147,10 @@ Ad.navigationOptions = ({ navigation }) => ({
     headerRight: (
         <View>
             {navigation.state.params.owner && (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={async () => {
+                    const response = await api.delete('/product', { data: {id: navigation.state.params.data._id}})
+                    return navigation.navigate('Adverts')
+                }}>
                     <Icon name="delete" size={25} color='#000' />
                 </TouchableOpacity>
             )}

@@ -43,6 +43,17 @@ export default new class Location {
 
     }
 
+    async getLocationFromAddress(address) {
+        try {
+            Geocoder.init(GOOGLE_API_KEY)
+            const location = await Geocoder.from(address)
+            console.log(location.results[0].geometry.location)
+            return location.results[0].geometry.location
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async getAddress(latitude, longitude) {
         Geocoder.init(GOOGLE_API_KEY)
         const jsonLocation = await Geocoder.from({ latitude, longitude })

@@ -28,7 +28,7 @@ export default function Profile({ navigation }) {
                     <Text style={styles.textOption}>Meus anúncios</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.option}>
-                    <Text style={styles.textOption}>Minhas reservas</Text>
+                    <Text style={styles.textOption}>Meus favoritos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={signOut} style={styles.optionEspecial}>
                     <Text style={styles.textOption2}>Sair da conta</Text>

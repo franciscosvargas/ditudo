@@ -10,6 +10,7 @@ import Register from './pages/Register'
 import Pesquisar from './pages/Main'
 import Profile from './pages/Profile'
 import Chat from './pages/chat/conversations'
+import Map from './pages/search/Map'
 
 // Profile Navigation 
 import Adverts from './pages/profile/adverts'
@@ -19,6 +20,7 @@ import Ad from './pages/search/Ad'
 const Perfil = createStackNavigator({
 	Profile,
 	Adverts,
+	Map,
 	Ad,
 	addAdvert,
 	

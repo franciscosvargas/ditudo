@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ImagePicker from 'react-native-image-picker'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import AsyncStorage from '@react-native-community/async-storage'
+import { NavigationEvents } from 'react-navigation'
+
 import { View, TouchableOpacity, StyleSheet, Text, Image, ScrollView, TextInput } from 'react-native'
 
 import api from '../../services/api'
@@ -9,19 +10,33 @@ import location from '../../services/location'
 
 export default function addAdvert({ navigation }) {
     const [error, setError] = useState(null)
+    const [address, setAddress] = useState(null)
     const [photo, setPhoto] = useState(null)
     const [name, setName] = useState(null)
     const [price, setPrice] = useState(null)
     const [description, setDescription] = useState(null)
 
+
     async function publishProduct() {
-        const { coords } = await location.getLocation()
-        const {latitude, longitude} = coords
+        let latitude = ''
+        let longitude = ''
+
+        if (address) {
+            const coords = await location.getLocationFromAddress(address)
+            console.log(coords)
+            latitude = coords.lat
+            longitude = coords.lng
+        } else {
+            const { coords } = await location.getLocation()
+            latitude = coords.latitude
+            longitude = coords.longitude
+        }
+
 
         if (photo == null) return setError(longitude)
         if (name == null || price == null) return setError('Preencha nome e preço')
 
-        const body = await createFormData(photo, { name, price, description, latitude, longitude})
+        const body = await createFormData(photo, { name, price, description, latitude, longitude })
 
         await api.post('/product', body, {
             headers: {
@@ -42,7 +57,6 @@ export default function addAdvert({ navigation }) {
             }
         })
     }
-
 
     function createFormData(photo, body) {
         const data = new FormData()
@@ -65,7 +79,6 @@ export default function addAdvert({ navigation }) {
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.containerDOM}>
-
             {/* Renderização da imagem do produto */}
             {photo && (
                 <Image
@@ -103,6 +116,7 @@ export default function addAdvert({ navigation }) {
             />
 
             <TextInput
+                multiline={true}
                 autoCorrect={false}
                 style={styles.input2}
                 placeholder="Descrição do produto"
@@ -111,8 +125,18 @@ export default function addAdvert({ navigation }) {
                 onChangeText={setDescription}
             />
 
+            <TextInput
+                multiline={true}
+                autoCorrect={false}
+                style={styles.input3}
+                placeholder="Digite o endereço de venda ou deixe em branco para usar a localização atual"
+                placeholderTextColor="#999"
+                value={address}
+                onChangeText={setAddress}
+            />
+
             {error && (
-                <Text style={{color: '#FF0000'}}>{error}</Text>
+                <Text style={{ color: '#FF0000' }}>{error}</Text>
             )}
             <TouchableOpacity
                 onPress={publishProduct}
@@ -154,6 +178,17 @@ const styles = StyleSheet.create({
     input: {
         width: '90%',
         height: 50,
+        fontSize: 16,
+        backgroundColor: '#FFF',
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 3,
+        paddingHorizontal: 15,
+        marginTop: 15
+    },
+    input3: {
+        width: '90%',
+        height: 70,
         fontSize: 16,
         backgroundColor: '#FFF',
         borderWidth: 1,
