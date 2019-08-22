@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { View, TouchableOpacity, YellowBox, TextInput, FlatList, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, YellowBox, TextInput, FlatList, StyleSheet, Text, ScrollView} from 'react-native';
 import io from 'socket.io-client';
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -18,7 +18,7 @@ export default class Chat extends Component {
 	constructor(props) {
 		super(props);
 
-		this.socket = io('http://localhost:3001', {
+		this.socket = io('https://ditudo-backend.herokuapp.com', {
 			forceNew: true,
 			query: {
 				chat: this.props.navigation.state.params.chat._id,
@@ -29,12 +29,13 @@ export default class Chat extends Component {
 		})
 
 		this.socket.on('oldMessages', messages => {
+			messages = messages.slice(0).reverse()
 			this.setState({ messages })
 		})
 
 		this.socket.on('receiveMessage', message => {
 			let messages = this.state.messages
-			messages.push(message)
+			messages.unshift(message)
 			this.setState({ messages })
 		})
 
@@ -60,8 +61,7 @@ export default class Chat extends Component {
 		return (
 			<View style={styles.container}>
 				<FlatList
-
-					style={styles.messageList}
+					inverted
 					data={this.state.messages}
 					extraData={this.state}
 					keyExtractor={(item, index) => index.toString()}
@@ -116,9 +116,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#f5f5f5',
 	},
-	messageList: {
-		flex: 1
-	},
 	writeMessageContainer: {
 		backgroundColor: '#0E65E5',
 		flexDirection: 'row',
@@ -137,7 +134,8 @@ const styles = StyleSheet.create({
 		maxWidth: 300,
 		flex: -1,
 		marginLeft: 30,
-		marginTop: 10,
+		marginTop: 5,
+		marginBottom:5,
 		marginRight: 10,
 		padding: 10,
 		borderRadius: 10,
@@ -146,7 +144,8 @@ const styles = StyleSheet.create({
 	badgeReceived: {
 		maxWidth: 300,
 		marginLeft: 10,
-		marginTop: 10,
+		marginTop: 5,
+		marginBottom:5,
 		padding: 10,
 		borderRadius: 10,
 		backgroundColor: '#dbdbdb'

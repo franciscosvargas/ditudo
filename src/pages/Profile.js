@@ -21,14 +21,9 @@ export default function Profile({ navigation }) {
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
             <View style={styles.boxOption}>
-                <TouchableOpacity style={styles.option}>
-                    <Text style={styles.textOption}>Editar meu perfil</Text>
-                </TouchableOpacity>
+                
                 <TouchableOpacity onPress={redirectToAdverts} style={styles.option}>
                     <Text style={styles.textOption}>Meus anúncios</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.option}>
-                    <Text style={styles.textOption}>Meus favoritos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={signOut} style={styles.optionEspecial}>
                     <Text style={styles.textOption2}>Sair da conta</Text>

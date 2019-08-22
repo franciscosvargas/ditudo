@@ -161,11 +161,6 @@ Ad.navigationOptions = ({ navigation }) => ({
                     <Icon name="delete" size={25} color='#000' />
                 </TouchableOpacity>
             )}
-            {!navigation.state.params.owner && (
-                <TouchableOpacity>
-                    <Icon name="favorite-border" size={25} color='#000' />
-                </TouchableOpacity>
-            )}
         </View>
     )
 

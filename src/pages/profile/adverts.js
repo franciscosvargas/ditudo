@@ -7,7 +7,8 @@ import api from '../../services/api'
 import add from '../../assets/plus.png'
 export default class Adverts extends Component {
 	state = {
-		data: []
+		data: [],
+		have: true
 	}
 
 	componentDidMount() {
@@ -15,46 +16,52 @@ export default class Adverts extends Component {
 	}
 
 	async getProductData() {
+		let have = true
 		const response = await api.get('/product/getByOwner')
-		this.setState({ data: response.data.slice(0).reverse() })
+		if (response.data.length == 0) have = false
+		this.setState({ data: response.data.slice(0).reverse(), have })
 	}
 
 	render() {
 		return (
 			<SafeAreaView style={styles.container}>
 				<NavigationEvents onWillFocus={() => this.getProductData()} />
-				<FlatList
-					style={{ flex: 1 }}
-					data={this.state.data}
-					extraData={this.state}
-					keyExtractor={(item, index) => index.toString()}
-					renderItem={({ item }) => (
-						<TouchableOpacity
-							onPress={() => { this.props.navigation.navigate('Ad', { data: item }) }}
-							style={styles.item}
-						>
-							<Image style={styles.itemImage} source={{ uri: `data:image/gif;base64,${item.image}` }} />
-							<View style={{ padding: 10, width: '65%' }}>
-								<Text
-									style={styles.itemName}
-									ellipsizeMode={'tail'}
-									numberOfLines={1}
-								>
-									{item.name}
-								</Text>
-								<Text style={styles.itemPrice}>R$ {item.price}</Text>
-								<Text
-									style={styles.itemDescription}
-									ellipsizeMode={'tail'}
-									numberOfLines={3}
-								>
-									{item.description}
-								</Text>
-							</View>
+				{this.state.have && (
+					<FlatList
+						style={{ flex: 1 }}
+						data={this.state.data}
+						extraData={this.state}
+						keyExtractor={(item, index) => index.toString()}
+						renderItem={({ item }) => (
+							<TouchableOpacity
+								onPress={() => { this.props.navigation.navigate('Ad', { data: item }) }}
+								style={styles.item}
+							>
+								<Image style={styles.itemImage} source={{ uri: `data:image/gif;base64,${item.image}` }} />
+								<View style={{ padding: 10, width: '65%' }}>
+									<Text
+										style={styles.itemName}
+										ellipsizeMode={'tail'}
+										numberOfLines={1}
+									>
+										{item.name}
+									</Text>
+									<Text style={styles.itemPrice}>R$ {item.price}</Text>
+									<Text
+										style={styles.itemDescription}
+										ellipsizeMode={'tail'}
+										numberOfLines={3}
+									>
+										{item.description}
+									</Text>
+								</View>
 
-						</TouchableOpacity>
-					)}
-				/>
+							</TouchableOpacity>
+						)}
+					/>
+				)}
+
+				{!this.state.have && <Text style={styles.errorMessage}>Você ainda não possui anúncios</Text>}
 
 			</SafeAreaView>
 		)
@@ -66,6 +73,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#f5f5f5',
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	item: {
 		flexDirection: 'row',
@@ -101,6 +110,11 @@ const styles = StyleSheet.create({
 		textAlign: 'justify',
 		fontFamily: 'Cabin',
 		color: '#999',
+	},
+	errorMessage: {
+		fontFamily: 'Fredoka One',
+		fontSize: 20,
+		color: '#999'
 	}
 })
 

@@ -23,13 +23,13 @@ const Pesquisar = createStackNavigator({
 	Main,
 	Ad,
 	Map,
-})
+},{initialRouteName: 'Main'})
 
 const Chat = createStackNavigator({
 	Conversations,
 	Conversation,
 	Ad
-})
+},{initialRouteName: 'Conversations'})
 
 const Perfil = createStackNavigator({
 	Profile,
@@ -37,13 +37,13 @@ const Perfil = createStackNavigator({
 	Map,
 	Ad,
 	addAdvert,	
-})
+},{initialRouteName: 'Profile'})
 
 const Auth = createSwitchNavigator({
 	Initial,
 	Login,
 	Register
-})
+},{initialRouteName: 'Initial'})
 
 const App = createBottomTabNavigator({
 	Pesquisar,
@@ -70,6 +70,8 @@ const App = createBottomTabNavigator({
 			},
 		}),
 		tabBarOptions: {
+			
+			keyboardHidesTabBar: true,
 			activeTintColor: '#0E65E5',
 			inactiveTintColor: '#323232',
 			style: {
