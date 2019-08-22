@@ -51,7 +51,16 @@ export default function addAdvert({ navigation }) {
 
     }
     function handleChoosePhoto() {
-        ImagePicker.launchImageLibrary({ noData: true }, response => {
+        const config = { 
+            noData: true,
+            title: 'Escolha uma foto',
+            chooseFromLibraryButtonTitle: 'Escolher da galeria',
+            takePhotoButtonTitle: 'Tirar foto',
+            cancelButtonTitle: 'Cancelar',
+            
+        }
+
+        ImagePicker.showImagePicker(config, response => {
             if (response.uri) {
                 setPhoto(response)
             }

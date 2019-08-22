@@ -24,7 +24,10 @@ export default class Chats extends Component {
 	async getChats() {
 		let have = true
 		const response = await api.get('/chat')
-		if (response.data.length == 0) have = false
+		if (response.data.length == 0) {
+			have = false
+			response.data = null
+		}
 		this.setState({ chats: response.data, have })
 
 	}
@@ -35,6 +38,7 @@ export default class Chats extends Component {
 
 				{this.state.have && (
 					<FlatList
+						contentContainerStyle={{flex: 1}}
 						style={{ flex: 1 }}
 						data={this.state.chats}
 						extraData={this.state}
@@ -44,7 +48,7 @@ export default class Chats extends Component {
 								onPress={() => this.createChat(item)}
 								style={styles.item}
 							>
-								<View style={{ padding: 10, width: '65%' }}>
+								<View style={{ padding: 10 }}>
 									<Text
 										style={styles.itemName}
 										ellipsizeMode={'tail'}
@@ -57,7 +61,8 @@ export default class Chats extends Component {
 										ellipsizeMode={'tail'}
 										numberOfLines={3}
 									>
-										{item.messages[(item.messages.length - 1)].message}
+										{item.messages.length > 0 &&
+											item.messages[(item.messages.length - 1)].message}
 									</Text>
 								</View>
 
@@ -65,7 +70,7 @@ export default class Chats extends Component {
 						)}
 					/>)}
 
-				{!this.state.have && <Text style={styles.errorMessage}>Você ainda não possui conversas</Text>}
+				{!this.state.have && <View style={ { flexGrow:1, alignItems:'center', justifyContent: 'center'}}><Text style={styles.errorMessage}>Você ainda não possui conversas</Text></View>}
 			</View>
 		)
 	}
@@ -74,8 +79,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#f5f5f5',
-		alignItems: 'center',
-		justifyContent: 'center'
+		
 	},
 	item: {
 		flexDirection: 'row',
@@ -114,7 +118,7 @@ const styles = StyleSheet.create({
 	errorMessage: {
 		fontFamily: 'Fredoka One',
 		fontSize: 20,
-		color: '#999'
+		color: '#999',
 	}
 })
 Chats.navigationOptions = ({ navigation }) => ({

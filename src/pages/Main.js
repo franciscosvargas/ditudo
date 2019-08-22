@@ -10,10 +10,12 @@ import location from '../services/location'
 export default class Main extends Component {
     state = {
         products: null,
-        load: true,
         have: true,
     }
 
+    componentDidMount() {
+        location.requestPermission()
+    }
     async fetchProducts(keyword) {
         let have = true
         if (!keyword) keyword = ''
