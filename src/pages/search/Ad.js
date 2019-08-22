@@ -10,10 +10,18 @@ export default class Ad extends Component {
     state = {
         owner: null
     }
-
-    redirectToMap(){
-        this.props.navigation.navigate('Ad', { data: item })
+    
+    createChat = async () => {
+        const id = this.props.navigation.state.params.data._id
+        const response = await api.post('/chat', {id})
+        await AsyncStorage.getItem('@Ditudo:user').then((user) => {
+            user = JSON.parse(user)
+			response.data.iam = user._id
+		})
+        this.props.navigation.navigate('Conversation', {chat: response.data})
     }
+
+
     componentDidMount() {
         AsyncStorage.getItem('@Ditudo:user').then(user => {
             user = JSON.parse(user)
@@ -66,6 +74,7 @@ export default class Ad extends Component {
 
                 {!this.props.navigation.state.params.owner && (
                     <TouchableOpacity
+                        onPress={this.createChat}
                         style={styles.button}
                     >
                         <Icon name="chat" size={25} color='#FFF' />

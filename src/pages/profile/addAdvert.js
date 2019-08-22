@@ -33,7 +33,7 @@ export default function addAdvert({ navigation }) {
         }
 
 
-        if (photo == null) return setError(longitude)
+        if (photo == null) return setError('Selecione uma imagem')
         if (name == null || price == null) return setError('Preencha nome e preço')
 
         const body = await createFormData(photo, { name, price, description, latitude, longitude })

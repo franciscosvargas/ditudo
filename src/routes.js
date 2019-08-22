@@ -9,7 +9,8 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Main from './pages/Main'
 import Profile from './pages/Profile'
-import Chat from './pages/chat/conversations'
+import Conversations from './pages/chat/conversations'
+import Conversation from './pages/chat/chat'
 import Map from './pages/search/Map'
 
 // Profile Navigation 
@@ -21,7 +22,13 @@ import Ad from './pages/search/Ad'
 const Pesquisar = createStackNavigator({
 	Main,
 	Ad,
-	Map
+	Map,
+})
+
+const Chat = createStackNavigator({
+	Conversations,
+	Conversation,
+	Ad
 })
 
 const Perfil = createStackNavigator({
