@@ -17,9 +17,11 @@ export default class Ad extends Component {
         const id = this.props.navigation.state.params.data._id
         const owner = this.props.navigation.state.params.data.owner._id
         const response = await api.get(`/product/search/others?id=${id}&owner=${owner}`)
-        this.setState({
-            products: response.data
-        })
+        if(response.data && response.data.length > 0) {
+            this.setState({
+                products: response.data
+            })
+        }    
     }
 
     createChat = async () => {

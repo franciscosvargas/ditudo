@@ -8,7 +8,6 @@ const api = axios.create({
 
 })
 
-
 api.interceptors.request.use(async function (config) {
     
     await AsyncStorage.getItem('@Ditudo:token').then(token => {
@@ -17,7 +16,6 @@ api.interceptors.request.use(async function (config) {
         }
       });
    
-
     return config;
 })
 

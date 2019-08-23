@@ -11,15 +11,19 @@ export default class Main extends Component {
     state = {
         products: null,
         have: true,
+        location: null,
     }
 
     componentDidMount() {
-        location.requestPermission()
+        
     }
     async fetchProducts(keyword) {
         let have = true
+        const {coords} = await location.getLocation()
+        const {latitude, longitude} = coords
         if (!keyword) keyword = ''
-        const response = await api.get(`/product/search?keyword=${keyword}`)
+            const response = await api.get(`/product/search?keyword=${keyword}&latitude=${latitude}&longitude=${longitude}`)
+
         if(response.data.length == 0) {
             response.data = false
             have = false
