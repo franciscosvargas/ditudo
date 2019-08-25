@@ -19,7 +19,7 @@ export default class Main extends Component {
     }
     async fetchProducts(keyword) {
         let have = true
-        const {coords} = await location.getLocation()
+        const {coords} = await  location.getLocation()
         const {latitude, longitude} = coords
         if (!keyword) keyword = ''
             const response = await api.get(`/product/search?keyword=${keyword}&latitude=${latitude}&longitude=${longitude}`)
@@ -66,9 +66,10 @@ export default class Main extends Component {
                         style={{ flexGrow: 1 }}
                         data={this.state.products}
                         extraData={this.state}
-                        keyExtractor={(item, index) => index.toString()}
+                        keyExtractor={(item) => { return item._id; }}
                         renderItem={({ item }) => (
                             <TouchableOpacity
+                                key={item._id}
                                 onPress={() => { this.props.navigation.navigate('Ad', { data: item }) }}
                                 style={styles.item}
                             >
