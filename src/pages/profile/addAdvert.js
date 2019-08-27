@@ -51,13 +51,13 @@ export default function addAdvert({ navigation }) {
 
     }
     function handleChoosePhoto() {
-        const config = { 
+        const config = {
             noData: true,
             title: 'Escolha uma foto',
             chooseFromLibraryButtonTitle: 'Escolher da galeria',
             takePhotoButtonTitle: 'Tirar foto',
             cancelButtonTitle: 'Cancelar',
-            
+
         }
 
         ImagePicker.showImagePicker(config, response => {
@@ -87,7 +87,11 @@ export default function addAdvert({ navigation }) {
     }
 
     return (
-        <ScrollView style={styles.container} contentContainerStyle={styles.containerDOM}>
+        <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.containerDOM}
+            keyboardShouldPersistTaps='always'
+        >
             {/* Renderização da imagem do produto */}
             {photo && (
                 <Image
