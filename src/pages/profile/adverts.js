@@ -37,7 +37,7 @@ export default class Adverts extends Component {
 								onPress={() => { this.props.navigation.navigate('Ad', { data: item }) }}
 								style={styles.item}
 							>
-								<Image style={styles.itemImage} source={{ uri: `data:image/gif;base64,${item.image}` }} />
+								<Image style={styles.itemImage} source={{ uri: item.image }} />
 								<View style={{ padding: 10, width: '65%' }}>
 									<Text
 										style={styles.itemName}

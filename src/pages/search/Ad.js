@@ -16,8 +16,9 @@ export default class Ad extends Component {
     getProducts = async () => {
         const id = this.props.navigation.state.params.data._id
         const owner = this.props.navigation.state.params.data.owner._id
-        const response = await api.get(`/product/search/others?id=${id}&owner=${owner}`)
+		const response = await api.get(`/product/search/others?id=${id}&owner=${owner}`)
         if(response.data && response.data.length > 0) {
+			
             this.setState({
                 products: response.data
             })
@@ -37,8 +38,8 @@ export default class Ad extends Component {
 
     componentDidMount() {
         AsyncStorage.getItem('@Ditudo:user').then(user => {
-            user = JSON.parse(user)
-
+			user = JSON.parse(user)
+			
             if (this.props.navigation.state.params.data.owner._id == user._id) {
                 this.props.navigation.setParams({
                     iamOwner: user._id
@@ -46,19 +47,24 @@ export default class Ad extends Component {
             } else {
                 this.props.navigation.setParams({
                     iamOwner: null
-                })
-            }
+				})
+
+				this.getProducts()
+			}
+			
+			
         });
 
-        this.getProducts()
+        
 
     }
     render() {
         return (
             <ScrollView ref='_scrollView' contentContainerStyle={{ paddingBottom: 10 }} style={styles.container}>
-                <Image
+            
+				<Image
                     style={styles.image}
-                    source={{ uri: `data:image/gif;base64,${this.props.navigation.state.params.data.image}` }}
+                    source={{ uri: this.props.navigation.state.params.data.image }}
                 />
                 <View style={{ padding: 10 }}>
                     <Text
@@ -77,10 +83,12 @@ export default class Ad extends Component {
                 <View style={{ padding: 10 }}>
                     <Text style={styles.titleProfile}>Informações do vendedor</Text>
                     <View style={{ flexDirection: 'row' }}>
-                        {this.props.navigation.state.params.data.owner.image && (<Image
+
+                        {this.props.navigation.state.params.data.owner.image ? (<Image
                             style={styles.profileImage}
-                            source={{ uri: `data:image/gif;base64,${this.props.navigation.state.params.data.owner.image}` }}
-                        />)}
+                            source={{ uri: this.props.navigation.state.params.data.owner.image }}
+                        />) : null}
+
                         <View style={{ marginLeft: 10, marginTop: 20 }}>
                             <Text style={styles.profileName}>{this.props.navigation.state.params.data.owner.name}</Text>
                             <TouchableOpacity
@@ -127,7 +135,7 @@ export default class Ad extends Component {
                                     }}
                                     style={stylesList.item}
                                 >
-                                    <Image style={stylesList.itemImage} source={{ uri: `data:image/gif;base64,${item.image}` }} />
+                                    <Image style={stylesList.itemImage} source={{ uri: item.image }} />
                                     <View style={{ padding: 10, width: '65%' }}>
                                         <Text
                                             style={stylesList.itemName}

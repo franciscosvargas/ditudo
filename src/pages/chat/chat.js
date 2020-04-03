@@ -18,7 +18,7 @@ export default class Chat extends Component {
 	constructor(props) {
 		super(props);
 
-		this.socket = io('https://ditudo-backend.herokuapp.com', {
+		this.socket = io('http://35.222.105.40:3001/', {
 			forceNew: true,
 			query: {
 				chat: this.props.navigation.state.params.chat._id,

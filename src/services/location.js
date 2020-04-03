@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { PermissionsAndroid, View, Text, StyleSheet, Image } from 'react-native'
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
+import LocationServicesDialogBox from "react-native-android-location-services-dialog-box"
 
 import locationIcon from '../assets/location.png'
 import expandIcon from '../assets/expand_blue.png'

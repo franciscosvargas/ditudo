@@ -28,15 +28,11 @@ target 'ditudo' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
-  pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
-  pod 'react-native-mapbox-gl', :path => '../node_modules/@mapbox/react-native-mapbox-gl'
 
-  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
   target 'ditudoTests' do
     inherit! :search_paths

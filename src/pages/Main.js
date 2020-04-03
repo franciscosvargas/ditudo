@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, TextInput, Text, StyleSheet, Image, TouchableOpacity, FlatList, } from 'react-native';
+import { ScrollView, View, TextInput, Text, StyleSheet, Image, TouchableOpacity, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { NavigationEvents } from 'react-navigation'
 import * as Progress from 'react-native-progress'
@@ -11,16 +11,23 @@ export default class Main extends Component {
     state = {
         products: null,
         have: true,
-        location: null,
+		location: null,
+		keyword: ""
     }
 
-    componentDidMount() {
-        
-    }
+    componentDidMount = () => {
+		this.fetchProducts(this.state.keyword)
+		
+	}
+
+
+	
     async fetchProducts(keyword) {
         let have = true
-        const {coords} = await  location.getLocation()
-        const {latitude, longitude} = coords
+		const {coords} = await location.getLocation()
+		
+		const {latitude, longitude} = coords
+
         if (!keyword) keyword = ''
             const response = await api.get(`/product/search?keyword=${keyword}&latitude=${latitude}&longitude=${longitude}`)
 
@@ -46,7 +53,9 @@ export default class Main extends Component {
                         style={{ marginLeft: 5, flexGrow: 1, width: '80%' }}
                         placeholder="Que produto você deseja hoje?"
                         placeholderTextColor="#999"
-                        onChangeText={(keyword) => this.fetchProducts(keyword)}
+						onChangeText={(keyword) => this.setState({keyword})}
+						
+						onSubmitEditing={() => this.fetchProducts(this.state.keyword) }
                     />
                 </View>
                 {this.state.products && (
@@ -73,7 +82,7 @@ export default class Main extends Component {
                                 onPress={() => { this.props.navigation.navigate('Ad', { data: item }) }}
                                 style={styles.item}
                             >
-                                <Image style={styles.itemImage} source={{ uri: `data:image/gif;base64,${item.image}` }} />
+                                <Image style={styles.itemImage} source={{ uri: item.image }} />
                                 <View style={{ padding: 10, width: '65%' }}>
                                     <Text
                                         style={styles.itemName}

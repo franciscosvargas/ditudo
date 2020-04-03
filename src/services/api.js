@@ -4,8 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 const api = axios.create({
     /* baseURL: 'https://ditudo-backend.herokuapp.com', */
-    baseURL: 'https://ditudo.herokuapp.com/',
-
+    baseURL: 'http://35.222.105.40:3001/',
 })
 
 api.interceptors.request.use(async function (config) {

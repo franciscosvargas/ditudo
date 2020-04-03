@@ -10,11 +10,13 @@ MapboxGL.setAccessToken('pk.eyJ1IjoiZnJhbmNpc2Nvc3ZhcmdhcyIsImEiOiJjanpibG90ZjEw
 export default class Main extends Component {
 
 	renderLocations = () => (
-		this.props.navigation.state.params.data.map(location => (
+		this.props.navigation.state.params.data.map(location=> (
 			<MapboxGL.PointAnnotation
 				id={location._id}
-				coordinate={[parseFloat(location.location.longitude), parseFloat(location.location.latitude)]}
+				coordinate={[location.loc.coordinates[1], location.loc.coordinates[0]] }
 			>
+
+				{console.log(location.loc.coordinates)}
 				<View style={styles.annotationContainer}>
 					<Text>{location.price}</Text>
 				</View>

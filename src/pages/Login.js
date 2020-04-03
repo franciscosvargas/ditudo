@@ -8,10 +8,16 @@ import api from '../services/api'
 
 export default function Login({navigation}) {
     const [password, setPassword] = useState('')
-    const [username, setUsername] = useState('')
+	const [username, setUsername] = useState('')
+	const [error, setError] = useState('')
 
     async function signInUser() {
         const response = await api.post('/auth', {email: username, password})
+
+		if(response.data.error) {
+			setError(response.data.error)
+			return;
+		}
 
         await AsyncStorage.multiSet([
             ['@Ditudo:token', response.data.token],
@@ -33,6 +39,7 @@ export default function Login({navigation}) {
                 <Text style={styles.title}>DiTudo</Text>
             </View>
             <Text style={styles.subtitle}>Faça login ou crie uma conta</Text>
+			{error ? (<Text style={styles.error}>{error}</Text>) : null}
             <TextInput
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -84,6 +91,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Cabin',
         marginTop: 20,
         color: '#ddd',
+        fontSize: 17
+	},
+	error: {
+        fontFamily: 'Cabin',
+        marginTop: 20,
+        color: '#ff0000',
         fontSize: 17
     },
     logo: {
